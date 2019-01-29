@@ -19,7 +19,7 @@ module.exports.findById = async (req, res, next) => {
   try {
     const task = await Task.where({ id: req.params.id }).fetch();
     if (task === null) {
-      return next(new NotFound(`Recurso ${req.params.id} não foi encontrado`));
+      throw new NotFound(`Recurso ${req.params.id} não foi encontrado`);
     }
     return res.json(task);
   } catch (err) {
@@ -27,25 +27,18 @@ module.exports.findById = async (req, res, next) => {
   }
 };
 
-module.exports.create = async (req, res) => {
-  const { error, value } = createTaskSchema.validate(req.body, { abortEarly: false });
-
-  if (error !== null) {
-    res.json(error);
-  } else {
-    res.json(value);
+module.exports.create = async (req, res, next) => {
+  try {
+    const { error, value } = createTaskSchema.validate(req.body, { abortEarly: false });
+    if (error !== null) {
+      const errorMessage = error.details.map(d => d.message);
+      return res.status(400).send(errorMessage);
+    }
+    const task = new Task(value);
+    return res.json(await task.save());
+  } catch (error) {
+    return next(error);
   }
-
-  // .then((validatedUser) => {
-  //   res.status(200).send(`user ${JSON.stringify(validatedUser)} created`);
-  // })
-  // .catch((validationError) => {
-  //   const errorMessage = validationError.details.map(d => d.message);
-  //   res.status(400).send(errorMessage);
-  // });
-
-  // const task = new Task(taskRequest);
-  // res.json(await task.save());
 };
 
 module.exports.update = async (req, res) => {
