@@ -1,1 +1,7 @@
-module.exports.tasks = [{ titulo: 'Task 1' }, { titulo: 'Task 2' }, { titulo: 'Task 3' }];
+const bookshelf = require('../bookshelf');
+
+const Task = bookshelf.Model.extend({
+  tableName: 'tasks',
+});
+
+module.exports = Task;

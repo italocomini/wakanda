@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.js",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/**/*.js",
+    "migrate:make": "knex migrate:make",
+    "migrate:latest": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback"
   },
   "keywords": [],
   "author": "",
@@ -15,8 +18,10 @@
     "bookshelf": "^0.14.2",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
+    "joi": "^14.3.1",
     "knex": "^0.13.0",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "winston": "^3.2.0"
   },
   "devDependencies": {
     "eslint": "^5.12.1",
