@@ -4,8 +4,8 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const { NotFound } = require('./exceptions');
 const logger = require('./logger');
+const { AbstractError, InternalServerError, NotFound } = require('./exceptions');
 
 const app = express();
 
@@ -19,15 +19,23 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  logger.error(err);
-  if (req.app.get('env') === 'production') {
-    delete err.stack;
+  logger.error(`path: ${req.originalUrl} | error: ${err} | stack: ${err.stack}`);
+
+  delete err.stack;
+
+  if (err instanceof AbstractError) {
+    const { name, statusCode, message } = err;
+    return res.status(statusCode).json({
+      name,
+      statusCode,
+      message,
+    });
   }
-  return res.status(err.statusCode || 500).json(err);
+  return res.status(500).json(new InternalServerError());
 });
 
 app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
+  console.log('🚀 Servidor rodando na porta 3000');
   console.log('Press CTRL-C to stop\n');
 });
 

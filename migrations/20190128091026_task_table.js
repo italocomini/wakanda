@@ -4,7 +4,7 @@ exports.up = (knex, Promise) => Promise.all([
     table.string('title', 100).notNullable();
     table.text('description');
     table.timestamp('created_at', 6).notNullable().defaultTo(knex.fn.now(6));
-    table.timestamp('updated_at');
+    table.timestamp('updated_at').nullable();
   }),
 ]);
 

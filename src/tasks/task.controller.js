@@ -1,6 +1,7 @@
 const Task = require('./task.model');
 const createTaskSchema = require('./task.schema');
 const { NotFound } = require('../exceptions');
+const logger = require('../logger');
 
 module.exports.index = async (req, res, next) => {
   try {
@@ -23,6 +24,7 @@ module.exports.findById = async (req, res, next) => {
     }
     return res.json(task);
   } catch (err) {
+    logger.error(`/tasks/${req.params.id} : ${err.stack}`);
     return next(err);
   }
 };
