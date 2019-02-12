@@ -3,13 +3,15 @@ const createTaskSchema = require('./task.schema');
 const { NotFound } = require('../exceptions');
 const logger = require('../logger');
 
-module.exports.index = async (req, res, next) => {
+module.exports.findByProject = async (req, res, next) => {
   try {
     const pageable = {
       pageSize: req.query.pageSize || 10,
       page: req.query.page || 1,
     };
-    const tasks = await Task.fetchPage(pageable);
+
+    const tasks = await Task.query({ where: { project_id: req.params.projectId } }).fetchPage(pageable);
+
     return res.json({ data: tasks.models, meta: tasks.pagination });
   } catch (err) {
     return next(err);
