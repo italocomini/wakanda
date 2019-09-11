@@ -39,6 +39,7 @@ module.exports.create = async (req, res, next) => {
       return res.status(400).send(errorMessage);
     }
     const task = new Task(value);
+    task.set('project_id', req.params.projectId);
     return res.json(await task.save());
   } catch (error) {
     return next(error);
