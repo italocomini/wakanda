@@ -7,7 +7,7 @@ module.exports = {
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
       password: process.env.DB_PASS,
-      database: process.env.BD_NAME,
+      database: process.env.DB_NAME,
       charset: 'utf8',
     },
     pool: {
@@ -16,34 +16,20 @@ module.exports = {
     },
     migrations: {
       tableName: 'migrations',
+      directory: './db/migrations',
     },
-  },
-
-  staging: {
-    client: 'mysql',
-    connection: {
-      host: '127.0.0.1',
-      user: 'root',
-      password: '',
-      database: 'wakanda',
-      charset: 'utf8',
-    },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: 'migrations',
+    seeds: {
+      directory: './db/seeds/dev',
     },
   },
 
   production: {
     client: 'mysql',
     connection: {
-      host: '127.0.0.1',
-      user: 'root',
-      password: '',
-      database: 'wakanda',
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
       charset: 'utf8',
     },
     pool: {
@@ -52,6 +38,10 @@ module.exports = {
     },
     migrations: {
       tableName: 'migrations',
+      directory: './db/migrations',
+    },
+    seeds: {
+      directory: './db/seeds/prod',
     },
   },
 };

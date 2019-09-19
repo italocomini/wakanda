@@ -1,7 +1,5 @@
 const Task = require('./task.model');
 const createTaskSchema = require('./task.schema');
-const { NotFound } = require('../exceptions');
-const logger = require('../logger');
 
 module.exports.findByProject = async (req, res, next) => {
   try {
@@ -10,7 +8,8 @@ module.exports.findByProject = async (req, res, next) => {
       page: req.query.page || 1,
     };
 
-    const tasks = await Task.query({ where: { project_id: req.params.projectId } }).fetchPage(pageable);
+    const tasks = await Task.query({ where: { project_id: req.params.projectId } })
+      .fetchPage(pageable);
 
     return res.json({ data: tasks.models, meta: tasks.pagination });
   } catch (err) {
@@ -22,11 +21,10 @@ module.exports.findById = async (req, res, next) => {
   try {
     const task = await Task.where({ id: req.params.id }).fetch();
     if (task === null) {
-      throw new NotFound(`Recurso ${req.params.id} não foi encontrado`);
+      next(res.e.notFound(`Tarefa #${req.params.id} não foi encontrado`));
     }
     return res.json(task);
   } catch (err) {
-    logger.error(`/tasks/${req.params.id} : ${err.stack}`);
     return next(err);
   }
 };
@@ -35,8 +33,8 @@ module.exports.create = async (req, res, next) => {
   try {
     const { error, value } = createTaskSchema.validate(req.body, { abortEarly: false });
     if (error !== null) {
-      const errorMessage = error.details.map(d => d.message);
-      return res.status(400).send(errorMessage);
+      const errorMessage = error.details.map((d) => d.message);
+      next(res.e.badRequest(errorMessage));
     }
     const task = new Task(value);
     task.set('project_id', req.params.projectId);

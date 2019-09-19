@@ -1,4 +1,4 @@
-const bookshelf = require('../bookshelf');
+const { bookshelf } = require('../db');
 const Project = require('../projects/project.model');
 
 const Task = bookshelf.Model.extend({
