@@ -4,15 +4,16 @@ Este projeto foi criado com objetivo exemplificar a utilização de algumas ferr
 
 
 ### Dependências:
-[Knex.js](http://knexjs.org/) - query builder
-[Express.js](https://expressjs.com/) - web framework
-[Hapi/Boom](https://github.com/hapijs/boom) - tratamento de erro
-[Bookshelf](https://bookshelfjs.org/) - ORM
-[Joi](https://joi.dev/) - validação
-[MySQL](https://www.mysql.com/) - banco de dados
-[winston](https://github.com/winstonjs/winston) - ferramenta de log
-[Jest](https://jestjs.io/) - ferramenta de teste
-[Docker](https://www.docker.com/) - ferramenta de virtualização baseada em container
+
+* [Knex.js](http://knexjs.org/) - query builder
+* [Express.js](https://expressjs.com/) - web framework
+* [Hapi/Boom](https://github.com/hapijs/boom) - tratamento de erro
+* [Bookshelf](https://bookshelfjs.org/) - ORM
+* [Joi](https://joi.dev/) - validação
+* [MySQL](https://www.mysql.com/) - banco de dados
+* [winston](https://github.com/winstonjs/winston) - ferramenta de log
+* [Jest](https://jestjs.io/) - ferramenta de teste
+* [Docker](https://www.docker.com/) - ferramenta de virtualização baseada em container
 
 
 ### Primeiros passos:
